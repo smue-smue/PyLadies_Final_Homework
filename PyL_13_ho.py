@@ -1,6 +1,9 @@
-# Task:
+# Task: Cipher Tool
 
-# Objective: 
+# Objective: Apply cipher techniques to a given .txt-file,
+# saving it to another .txt-file. Use command-line interface that allows 
+# users to specify input files, output files, cipher offset, 
+# characters to be replaced, and their numerical replacements.
 
 import argparse
 
@@ -31,8 +34,6 @@ def cipher_ceasar(in_file, offset):
     except ValueError:
         print("You did not enter a number. Your invalid value is replaced with '1'.")
         int_offset = 1
-
-    int_offset = int(offset)
 
     try: 
         with open(in_file, encoding="utf-8") as input_file:
@@ -90,7 +91,9 @@ def save_to_new_file(result_cipher_number, out_file):
 
 # MAIN SCRIPT
 
-args = parser.parse_args()
+# read arguments that were passed from the CLI to the script,
+# parse and store them in variable "args".
+args = parser.parse_args() 
 
 result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset) # result is a string
 
