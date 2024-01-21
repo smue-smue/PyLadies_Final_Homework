@@ -8,8 +8,8 @@ parser = argparse.ArgumentParser(description="argparse greeting")
 parser.add_argument("--input", help="input file", required=True)
 parser.add_argument("--output", help="output file", required=True)
 parser.add_argument("--offset", help="offset value", required=True)
-parser.add_argument("--replace_old", help="old character to be replaced", required=True)
-parser.add_argument("--replace_new", help="number to replace old character", required=True)
+parser.add_argument("--replacing_character", help="old character to be replaced", required=True)
+parser.add_argument("--replacement_number", help="number to replace old character", required=True)
 parser.add_argument("--indent", action="store_true", help="name will be indented by 4 spaces")
 
 def cipher_ceasar(input, offset, indent=False):
@@ -33,20 +33,19 @@ def cipher_ceasar(input, offset, indent=False):
     
     return ciphered_ceasar
 
-def cipher_number(result_ciphered_ceasar, replace_new, replace_old):
+def cipher_number(result_ciphered_ceasar, replacement_number, replacing_character):
 
-    #ciphered_number = ""
     transformed = ""
 
     try:
-        replace_new = int(replace_new)
+        replacement_number = int(replacement_number)
     except ValueError:
         print("You did not enter a number. Your invalid value is replaced with '1'.")
-        replace_new = 1
+        replacement_number = 1
 
     replacements = {
-        replace_old.lower(): str(replace_new),
-        replace_old.upper(): str(replace_new)
+        replacing_character.lower(): str(replacement_number),
+        replacing_character.upper(): str(replacement_number)
     }
     
     for char in result_ciphered_ceasar:
@@ -61,9 +60,9 @@ def cipher_number(result_ciphered_ceasar, replace_new, replace_old):
 
 args = parser.parse_args()
 
-result_cipher_ceasar = cipher_ceasar(args.input, args.offset, args.indent) # result is a string
+result_cipher_ceasar = cipher_ceasar(args.input, args.offset) # result is a string
 
-result_cipher_number = cipher_number(result_cipher_ceasar, args.replace_new, args.replace_old)
+result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number)
 
 print("\nCiphered Ceasar: \n")
 print(result_cipher_ceasar)
