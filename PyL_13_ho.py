@@ -59,9 +59,8 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
 # Saving the final version to a new file
 
 def save_to_new_file(result_cipher_number, output):
-    output_file = open(output, mode="w", encoding="utf-8")
-    for line in result_cipher_number:
-        output_file.write(f"{line}")
+    with open(output, mode="w", encoding="utf-8") as output_file:
+        output_file.write(result_cipher_number)
     output_file.close()
 
 # MAIN SCRIPT
