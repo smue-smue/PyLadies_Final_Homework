@@ -12,7 +12,7 @@ parser.add_argument("--replace_old", help="old character to be replaced", requir
 parser.add_argument("--replace_new", help="number to replace old character", required=True)
 parser.add_argument("--indent", action="store_true", help="name will be indented by 4 spaces")
 
-def cipher_ceasar(input, output, offset, indent=False):
+def cipher_ceasar(input, offset, indent=False):
     """Program that opens a file and saves the changes to another file."""
     i_handle = open(input, encoding="utf-8")
 
@@ -29,12 +29,11 @@ def cipher_ceasar(input, output, offset, indent=False):
                 elif char.islower():
                     char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
                 new_line += char
-            
-            ciphered_ceasar += new_line
+        ciphered_ceasar += new_line
     
     return ciphered_ceasar
 
-def cipher_number(ciphered_ceasar, replace_new, replace_old):
+def cipher_number(result_ciphered_ceasar, replace_new, replace_old):
 
     ciphered_number = ""
 
@@ -46,7 +45,7 @@ def cipher_number(ciphered_ceasar, replace_new, replace_old):
 
     replace_old = args.replace_old.lower()
 
-    for line in ciphered_ceasar:
+    for line in result_ciphered_ceasar:
         new_line = line.split()
         for word in new_line:
             word.replace(replace_old, replace_new)
@@ -54,7 +53,7 @@ def cipher_number(ciphered_ceasar, replace_new, replace_old):
 
         ciphered_number += new_line
 
-
+    return ciphered_number
 
 # o_handle = open(output, mode="w", encoding="utf-8")
     # with o_handle as output_file:
@@ -63,10 +62,11 @@ def cipher_number(ciphered_ceasar, replace_new, replace_old):
 
 args = parser.parse_args()
 
-ciphered_ceasar = cipher_ceasar(args.input, args.output, args.offset, args.indent)
-ciphered_number = cipher_number(ciphered_ceasar, args.replace_new, args.replace_old)
+result_cipher_ceasar = cipher_ceasar(args.input, args.offset, args.indent)
+
+#result_cipher_number = cipher_number(result_cipher_ceasar, args.replace_new, args.replace_old)
 
 print("\n Ciphered Ceasar: \n")
-print(ciphered_ceasar)
-print("\n Ciphered Number: \n")
-print(ciphered_number)
+print(result_cipher_ceasar)
+#print("\n Ciphered Number: \n")
+#print(result_cipher_number)
