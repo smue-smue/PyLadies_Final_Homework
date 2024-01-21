@@ -4,12 +4,20 @@
 
 import argparse
 
-parser = argparse.ArgumentParser(description="argparse greeting")
+parser = argparse.ArgumentParser(
+    description="""
+    This script performs a Caesar cipher encryption on the text in the input file. 
+    It then replaces specified characters with a given number and saves the result to an output file.
+    
+    Example usage:
+    python your_script_name.py --in_file input.txt --out_file output.txt --offset 5 --replacing_character X --replacement_number 3 --indent
+    """,
+    formatter_class=argparse.RawTextHelpFormatter) # formatting mulitline message
 parser.add_argument("--in_file", help="input file", required=True)
 parser.add_argument("--out_file", help="output file", required=True)
-parser.add_argument("--offset", help="offset value", required=True)
+parser.add_argument("--offset", help="offset value", required=True, type=int)
 parser.add_argument("--replacing_character", help="old character to be replaced", required=True)
-parser.add_argument("--replacement_number", help="number to replace old character", required=True)
+parser.add_argument("--replacement_number", help="number to replace old character", required=True, type=int)
 parser.add_argument("--indent", action="store_true", help="name will be indented by 4 spaces")
 
 # 1st changes - ceasars cipher, moving characters by a given offset
