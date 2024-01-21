@@ -14,24 +14,24 @@ parser.add_argument("--indent", action="store_true", help="name will be indented
 
 # 1st changes - ceasars cipher, moving characters by a given offset
 
-def cipher_ceasar(input, offset, indent=False):
+def cipher_ceasar(input, offset):
     """Program that opens a file and saves the changes to another file."""
-    i_handle = open(input, encoding="utf-8")
 
     int_offset = int(offset)
 
-    new_line = ""
     ciphered_ceasar = ""
 
-    with i_handle as input_file:
+    with open(input, encoding="utf-8") as input_file:
         for line in input_file:
+            new_line = ""
             for char in line:
                 if char.isupper():
                     char = chr((ord(char) - ord("A") + int_offset) % 26 + ord("A"))
                 elif char.islower():
                     char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
                 new_line += char
-        ciphered_ceasar += new_line
+            ciphered_ceasar += new_line
+    input_file.close()
     
     return ciphered_ceasar
 
