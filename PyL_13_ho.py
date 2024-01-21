@@ -25,7 +25,7 @@ parser.add_argument("--indent", action="store_true", help="name will be indented
 
 # 1st changes - ceasars cipher, moving characters by a given offset
 
-def cipher_ceasar(in_file, offset):
+def cipher_ceasar(in_file, offset, indent=False):
     """Opens input file and performs a Ceasar's cipher,
     each letter is shifted by the offset number up the alphabet."""
  
@@ -46,6 +46,10 @@ def cipher_ceasar(in_file, offset):
                     elif char.islower():
                         char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
                     new_line += char
+
+                if indent:
+                    new_line = "    " + new_line
+
                 ciphered_ceasar += new_line
         input_file.close()
         return ciphered_ceasar
@@ -95,7 +99,7 @@ def save_to_new_file(result_cipher_number, out_file):
 # parse and store them in variable "args".
 args = parser.parse_args() 
 
-result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset) # result is a string
+result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset, args.indent) # result is a string
 
 result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
 
