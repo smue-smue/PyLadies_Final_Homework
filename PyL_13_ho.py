@@ -12,6 +12,8 @@ parser.add_argument("--replacing_character", help="old character to be replaced"
 parser.add_argument("--replacement_number", help="number to replace old character", required=True)
 parser.add_argument("--indent", action="store_true", help="name will be indented by 4 spaces")
 
+# 1st changes - ceasars cipher, moving characters by a given offset
+
 def cipher_ceasar(input, offset, indent=False):
     """Program that opens a file and saves the changes to another file."""
     i_handle = open(input, encoding="utf-8")
@@ -33,9 +35,11 @@ def cipher_ceasar(input, offset, indent=False):
     
     return ciphered_ceasar
 
+# 2nd changes - replacing given characters with numbers
+
 def cipher_number(result_ciphered_ceasar, replacing_character, replacement_number):
 
-    transformed = ""
+    ciphered_number = ""
 
     try:
         replacement_number = int(replacement_number)
@@ -49,20 +53,26 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
     }
     
     for char in result_ciphered_ceasar:
-        transformed += replacements.get(char, char)
-    return transformed
+        ciphered_number += replacements.get(char, char)
+    return ciphered_number
 
+# Saving the final version to a new file
 
-# o_handle = open(output, mode="w", encoding="utf-8")
-    # with o_handle as output_file:
-    #     for line in ciphered:
-    #         output_file.write(f"{line}\n")
+def save_to_new_file(result_cipher_number, output):
+    output_file = open(output, mode="w", encoding="utf-8")
+    for line in result_cipher_number:
+        output_file.write(f"{line}")
+    output_file.close()
+
+# MAIN SCRIPT
 
 args = parser.parse_args()
 
 result_cipher_ceasar = cipher_ceasar(args.input, args.offset) # result is a string
 
-result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number)
+result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
+
+save_to_new_file(result_cipher_number, args.output)
 
 print("\nCiphered Ceasar: \n")
 print(result_cipher_ceasar)
