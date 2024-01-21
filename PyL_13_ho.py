@@ -33,7 +33,7 @@ def cipher_ceasar(input, offset, indent=False):
     
     return ciphered_ceasar
 
-def cipher_number(result_ciphered_ceasar, replacement_number, replacing_character):
+def cipher_number(result_ciphered_ceasar, replacing_character, replacement_number):
 
     transformed = ""
 
