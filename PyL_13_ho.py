@@ -16,24 +16,32 @@ parser.add_argument("--indent", action="store_true", help="name will be indented
 
 def cipher_ceasar(in_file, offset):
     """Program that opens a file and saves the changes to another file."""
+ 
+    try:
+        int_offset = int(offset)
+    except ValueError:
+        print("You did not enter a number. Your invalid value is replaced with '1'.")
+        int_offset = 1
 
     int_offset = int(offset)
 
-    ciphered_ceasar = ""
-
-    with open(in_file, encoding="utf-8") as input_file:
-        for line in input_file:
-            new_line = ""
-            for char in line:
-                if char.isupper():
-                    char = chr((ord(char) - ord("A") + int_offset) % 26 + ord("A"))
-                elif char.islower():
-                    char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
-                new_line += char
-            ciphered_ceasar += new_line
-    input_file.close()
-    
-    return ciphered_ceasar
+    try: 
+        with open(in_file, encoding="utf-8") as input_file:
+            ciphered_ceasar = ""
+            for line in input_file:
+                new_line = ""
+                for char in line:
+                    if char.isupper():
+                        char = chr((ord(char) - ord("A") + int_offset) % 26 + ord("A"))
+                    elif char.islower():
+                        char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
+                    new_line += char
+                ciphered_ceasar += new_line
+        input_file.close()
+        return ciphered_ceasar
+    except OSError as e:
+        print(f"Error opening input file: {e}")
+        return None
 
 # 2nd changes - replacing given characters with numbers
 
@@ -59,9 +67,13 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
 # Saving the final version to a new file
 
 def save_to_new_file(result_cipher_number, out_file):
-    with open(out_file, mode="w", encoding="utf-8") as output_file:
-        output_file.write(result_cipher_number)
-    output_file.close()
+
+    try:
+        with open(out_file, mode="w", encoding="utf-8") as output_file:
+            output_file.write(result_cipher_number)
+        output_file.close()
+    except OSError as e:
+        print(print(f"Error opening output file: {e}"))
 
 # MAIN SCRIPT
 
