@@ -35,28 +35,24 @@ def cipher_ceasar(input, offset, indent=False):
 
 def cipher_number(result_ciphered_ceasar, replace_new, replace_old):
 
-    ciphered_number = ""
-    
+    #ciphered_number = ""
+    transformed = ""
+
     try:
         replace_new = int(replace_new)
     except ValueError:
         print("You did not enter a number. Your invalid value is replaced with '1'.")
         replace_new = 1
 
-    for line in result_ciphered_ceasar:
-        new_line = line.split(" ")
-        print(new_line)
-        new_line_processed = [] # reset for each line
-        for line in new_line:
-            for char in line:
-                if char.lower() == replace_old.lower():
-                    char = char.replace(replace_old, str(replace_new))
-                new_line += char
-                new_line_processed.append(char) # words joined into a single string
+    replacements = {
+        replace_old.lower(): str(replace_new),
+        replace_old.upper(): str(replace_new)
+    }
+    
+    for char in result_ciphered_ceasar:
+        transformed += replacements.get(char, char)
+    return transformed
 
-            ciphered_number += " ".join(new_line_processed)
-
-    return ciphered_number
 
 # o_handle = open(output, mode="w", encoding="utf-8")
     # with o_handle as output_file:
@@ -67,10 +63,10 @@ args = parser.parse_args()
 
 result_cipher_ceasar = cipher_ceasar(args.input, args.offset, args.indent) # result is a string
 
-#result_cipher_number = cipher_number(result_cipher_ceasar, args.replace_new, args.replace_old)
+result_cipher_number = cipher_number(result_cipher_ceasar, args.replace_new, args.replace_old)
 
 print("\nCiphered Ceasar: \n")
 print(result_cipher_ceasar)
-print(type(result_cipher_ceasar))
-#print("\nCiphered Number: \n")
-#print(result_cipher_number)
+
+print("\nCiphered Number: \n")
+print(result_cipher_number)
