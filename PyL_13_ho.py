@@ -13,15 +13,30 @@ parser = argparse.ArgumentParser(
     It then replaces specified characters with a given number and saves the result to an output file.
     
     Example usage:
-    python your_script_name.py --in_file input.txt --out_file output.txt --offset 5 --replacing_character X --replacement_number 3 --indent
+    python your_script_name.py --in_file input.txt --out_file output.txt --offset 5 
+    --replacing_character X --replacement_number 3 --indent
     """,
     formatter_class=argparse.RawTextHelpFormatter) # formatting mulitline message
-parser.add_argument("--in_file", help="input file", required=True)
-parser.add_argument("--out_file", help="output file", required=True)
-parser.add_argument("--offset", help="offset value", required=True, type=int)
-parser.add_argument("--replacing_character", help="old character to be replaced", required=True)
-parser.add_argument("--replacement_number", help="number to replace old character", required=True, type=int)
-parser.add_argument("--indent", action="store_true", help="name will be indented by 4 spaces")
+parser.add_argument("-i", "--in_file", 
+                    help="Path to the input file. This file contains the text to be processed.", 
+                    required=True)
+parser.add_argument("-o", "--out_file", 
+                    help="Path to the output file. The processed text will be saved to this file.", 
+                    required=True)
+parser.add_argument("--offset", 
+                    help="Offset value for the Caesar cipher. It specifies how many positions each letter will be shifted in the alphabet.", 
+                    required=True, 
+                    type=int)
+parser.add_argument("--replacing_character", 
+                    help="The character in the text that will be replaced.", 
+                    required=True)
+parser.add_argument("--replacement_number", 
+                    help="The number that will replace each occurrence of the specified character.", 
+                    required=True, 
+                    type=int)
+parser.add_argument("--indent", 
+                    action="store_true", 
+                    help="If set, the output will be indented by 4 spaces.")
 
 # 1st changes - ceasars cipher, moving characters by a given offset
 
@@ -93,6 +108,10 @@ def save_to_new_file(result_cipher_number, out_file):
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
 
+## ======
+### ====== Adding optional argument, adds a species of a random animal after each third word
+## ======
+        
 # MAIN SCRIPT
 
 # read arguments that were passed from the CLI to the script,
