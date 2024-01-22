@@ -6,6 +6,7 @@
 # characters to be replaced, and their numerical replacements.
 
 import argparse
+import random
 
 parser = argparse.ArgumentParser(
     description="""
@@ -41,9 +42,9 @@ parser.add_argument("--indent",
                     action="store_true", 
                     help="If set, the output will be indented by 4 spaces.")
 
-# 1st changes - ceasars cipher, moving characters by a given offset
+# 1st changes
 
-def cipher_ceasar(in_file, offset, indent=False):
+def cipher_ceasar(in_file, offset):
     """Opens input file and performs a Ceasar's cipher,
     each letter is shifted by the offset number up the alphabet."""
  
@@ -65,9 +66,6 @@ def cipher_ceasar(in_file, offset, indent=False):
                         char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
                     new_line += char
 
-                if indent:
-                    new_line = "    " + new_line
-
                 ciphered_ceasar += new_line
         input_file.close()
         return ciphered_ceasar
@@ -75,7 +73,7 @@ def cipher_ceasar(in_file, offset, indent=False):
         print(f"Error opening input file: {e}")
         return None
 
-# 2nd changes - replacing given characters with numbers
+# 2nd changes
 
 def cipher_number(result_ciphered_ceasar, replacing_character, replacement_number):
     """Takes the result of the Ceasar's cipher, replaces letters
@@ -98,20 +96,39 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
         ciphered_number += replacements.get(char, char)
     return ciphered_number
 
-## ======
+# 3rd changes
 
-def cipher_animal():
-    """ Takes the result of the 2nd Cipher, replaces xxx with a random animal."""
+def cipher_animal(result_cipher_number, animal):
+    """ Takes the result of the 2nd Cipher, replaces word at a randomly chosen position in each line
+     with a randomly chosen animal. Destroys text."""
 
+    animals = [
+        "Antelope", "Bear", "Cheetah", "Dolphin", "Elephant", "Flamingo",
+        "Giraffe", "Hippopotamus", "Iguana", "Jaguar", "Kangaroo", "Lion",
+        "Monkey", "Narwhal", "Octopus", "Penguin", "Quokka", "Rabbit",
+        "Shark", "Tiger", "Urchin", "Vulture", "Walrus", "Xerus", "Yak", "Zebra"
+    ]
+    
+    if animal:
+        lines = result_cipher_number.splitlines() # Split string text to List item - line per line
+        animal_select = random.choice(animals)
 
+        for i, line in enumerate(lines):
+            lst_line = line.split()
+            if lst_line: # Check if the line is not empty
+                number_select = random.randint(0, len(lst_line) - 1) # Choses random position at each line
+                lst_line[number_select] = animal_select
+                lines[i] = " ".join(lst_line)
+            #print(lines[i])
+        
+        mod_text = "\n".join(lines)
+        return mod_text
 
-
-### ====== Adding optional argument, adds a species of a random animal after each third word
-## ======
+    return result_cipher_number
 
 # Saving the final version to a new file
 
-def save_to_new_file(result_cipher_number, out_file):
+def save_to_new_file(result_cipher_number, out_file, indent=False):
     """Takes the final cipher result and saves it to the output file,
     as specified by the user."""
 
@@ -122,6 +139,10 @@ def save_to_new_file(result_cipher_number, out_file):
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
 
+                    # === FLAG EINARBEITEN ===
+                   # if indent:
+                   # new_line = "    " + new_line
+
 
 # =======================  MAIN SCRIPT ======================= #
 
@@ -129,16 +150,19 @@ def save_to_new_file(result_cipher_number, out_file):
 # parse and store them in variable "args".
 args = parser.parse_args() 
 
-result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset, args.indent) # result is a string
+result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset) # result is a string
 
 result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
 
-result_cipher_animal = cipher_animal(result_cipher_number, )
+result_cipher_animal = cipher_animal(result_cipher_number, args.animal)
 
-save_to_new_file(result_cipher_number, args.out_file)
+# save_to_new_file(result_cipher_animal, args.out_file, args.indent)
 
 print("\nCiphered Ceasar: \n")
 print(result_cipher_ceasar)
 
 print("\nCiphered Number: \n")
 print(result_cipher_number)
+
+print("\nCiphered Animal: \n")
+print(result_cipher_animal)
