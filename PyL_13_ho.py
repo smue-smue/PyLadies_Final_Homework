@@ -27,13 +27,16 @@ parser.add_argument("--offset",
                     help="Offset value for the Caesar cipher. It specifies how many positions each letter will be shifted in the alphabet.", 
                     required=True, 
                     type=int)
-parser.add_argument("--replacing_character", 
+parser.add_argument("--replacing_character",
                     help="The character in the text that will be replaced.", 
                     required=True)
 parser.add_argument("--replacement_number", 
                     help="The number that will replace each occurrence of the specified character.", 
                     required=True, 
                     type=int)
+parser.add_argument("--animal",
+                    action="store_true",
+                    help="If set, an random animal will be put into the code." ) # ==== UEBERARBEITEN =====
 parser.add_argument("--indent", 
                     action="store_true", 
                     help="If set, the output will be indented by 4 spaces.")
@@ -95,6 +98,17 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
         ciphered_number += replacements.get(char, char)
     return ciphered_number
 
+## ======
+
+def cipher_animal():
+    """ Takes the result of the 2nd Cipher, replaces xxx with a random animal."""
+
+
+
+
+### ====== Adding optional argument, adds a species of a random animal after each third word
+## ======
+
 # Saving the final version to a new file
 
 def save_to_new_file(result_cipher_number, out_file):
@@ -108,11 +122,8 @@ def save_to_new_file(result_cipher_number, out_file):
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
 
-## ======
-### ====== Adding optional argument, adds a species of a random animal after each third word
-## ======
-        
-# MAIN SCRIPT
+
+# =======================  MAIN SCRIPT ======================= #
 
 # read arguments that were passed from the CLI to the script,
 # parse and store them in variable "args".
@@ -121,6 +132,8 @@ args = parser.parse_args()
 result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset, args.indent) # result is a string
 
 result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
+
+result_cipher_animal = cipher_animal(result_cipher_number, )
 
 save_to_new_file(result_cipher_number, args.out_file)
 
