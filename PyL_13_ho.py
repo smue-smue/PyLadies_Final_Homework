@@ -129,7 +129,8 @@ def cipher_animal(result_cipher_number, animal):
 
 def save_to_new_file(result_cipher_animal, out_file, indent=False):
     """Takes the final cipher result and saves it to the output file,
-    as specified by the user."""
+    as specified by the user. If the file doesn't exist yet, it is created.
+    If it does exist already, the original contents are cleared and are lost."""
 
     try:
         with open(out_file, mode="w", encoding="utf-8") as output_file:
