@@ -128,21 +128,22 @@ def cipher_animal(result_cipher_number, animal):
 
 # Saving the final version to a new file
 
-def save_to_new_file(result_cipher_number, out_file, indent=False):
+def save_to_new_file(result_cipher_animal, out_file, indent=False):
     """Takes the final cipher result and saves it to the output file,
     as specified by the user."""
 
     try:
         with open(out_file, mode="w", encoding="utf-8") as output_file:
-            output_file.write(result_cipher_number)
+            if indent:
+                for line in result_cipher_number:
+                    line = "    " + line
+                    output_file.write(line)
+            else:
+                output_file.write(result_cipher_animal)
         output_file.close()
+
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
-
-                    # === FLAG EINARBEITEN ===
-                   # if indent:
-                   # new_line = "    " + new_line
-
 
 # =======================  MAIN SCRIPT ======================= #
 
@@ -156,7 +157,7 @@ result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_charac
 
 result_cipher_animal = cipher_animal(result_cipher_number, args.animal)
 
-# save_to_new_file(result_cipher_animal, args.out_file, args.indent)
+save_to_new_file(result_cipher_animal, args.out_file, args.indent)
 
 print("\nCiphered Ceasar: \n")
 print(result_cipher_ceasar)
