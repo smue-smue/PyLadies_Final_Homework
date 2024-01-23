@@ -28,7 +28,6 @@ parser.add_argument("-o", "--out_file",
                     required=True)
 parser.add_argument("--offset", 
                     help="Offset value for the Caesar cipher. It specifies how many positions each letter will be shifted in the alphabet.", 
-                    required=True, 
                     type=int)
 parser.add_argument("--replacing_character",
                     help="The character in the text that will be replaced.", 
@@ -50,6 +49,11 @@ def cipher_ceasar(in_file, offset):
     """Opens input file and performs a Ceasar's cipher,
     each letter is shifted by the offset number up the alphabet."""
 
+    if offset:
+        offset_value = offset
+    else:
+        offset_value = 0
+
     try: 
         with open(in_file, encoding="utf-8") as input_file:
             ciphered_ceasar = ""
@@ -57,9 +61,9 @@ def cipher_ceasar(in_file, offset):
                 new_line = ""
                 for char in line:
                     if char.isupper():
-                        char = chr((ord(char) - ord("A") + offset) % 26 + ord("A"))
+                        char = chr((ord(char) - ord("A") + offset_value) % 26 + ord("A"))
                     elif char.islower():
-                        char = chr((ord(char) - ord("a") + offset) % 26 + ord("a"))
+                        char = chr((ord(char) - ord("a") + offset_value) % 26 + ord("a"))
                     new_line += char
 
                 ciphered_ceasar += new_line
