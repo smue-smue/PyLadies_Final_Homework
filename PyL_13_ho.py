@@ -49,12 +49,6 @@ parser.add_argument("--indent",
 def cipher_ceasar(in_file, offset):
     """Opens input file and performs a Ceasar's cipher,
     each letter is shifted by the offset number up the alphabet."""
- 
-    try:
-        int_offset = int(offset)
-    except ValueError:
-        print("You did not enter a number. Your invalid value is replaced with '1'.")
-        int_offset = 1
 
     try: 
         with open(in_file, encoding="utf-8") as input_file:
@@ -81,12 +75,6 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
     by a certain number - both specified by the user."""
 
     ciphered_number = ""
-
-    try:
-        replacement_number = int(replacement_number)
-    except ValueError:
-        print("You did not enter a number. Your invalid value is replaced with '1'.")
-        replacement_number = 1
 
     replacements = {
         replacing_character.lower(): str(replacement_number),
