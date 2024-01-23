@@ -3,7 +3,8 @@
 # Objective: Apply cipher techniques to a given .txt-file,
 # saving it to another .txt-file. Use command-line interface that allows 
 # users to specify input files, output files, cipher offset, 
-# characters to be replaced, and their numerical replacements.
+# characters to be replaced, and their numerical replacements,
+# and if they want to insert animal names at random positions.
 
 import argparse
 import random
@@ -37,7 +38,7 @@ parser.add_argument("--replacement_number",
                     type=int)
 parser.add_argument("--animal",
                     action="store_true",
-                    help="If set, an random animal will be put into the code." ) # ==== UEBERARBEITEN =====
+                    help="If set, an random animal name will be put into random position in the text.")
 parser.add_argument("--indent", 
                     action="store_true", 
                     help="If set, the output will be indented by 4 spaces.")
@@ -76,7 +77,7 @@ def cipher_ceasar(in_file, offset):
 # 2nd changes
 
 def cipher_number(result_ciphered_ceasar, replacing_character, replacement_number):
-    """Takes the result of the Ceasar's cipher, replaces letters
+    """Takes the result of the 1st cipher, replaces letters
     by a certain number - both specified by the user."""
 
     ciphered_number = ""
@@ -99,8 +100,8 @@ def cipher_number(result_ciphered_ceasar, replacing_character, replacement_numbe
 # 3rd changes
 
 def cipher_animal(result_cipher_number, animal):
-    """ Takes the result of the 2nd Cipher, replaces word at a randomly chosen position in each line
-     with a randomly chosen animal. Destroys text."""
+    """ If set, takes the result of the 2nd Cipher, replaces word at a randomly chosen 
+    position in each line with a randomly chosen animal. Destroys text."""
 
     animals = [
         "Antelope", "Bear", "Cheetah", "Dolphin", "Elephant", "Flamingo",
@@ -119,12 +120,11 @@ def cipher_animal(result_cipher_number, animal):
                 number_select = random.randint(0, len(lst_line) - 1) # Choses random position at each line
                 lst_line[number_select] = animal_select
                 lines[i] = " ".join(lst_line)
-            #print(lines[i])
         
         mod_text = "\n".join(lines)
         return mod_text
 
-    return result_cipher_number
+    return result_cipher_number # if animal is not set, returns unchanged result of 2nd cipher
 
 # Saving the final version to a new file
 
