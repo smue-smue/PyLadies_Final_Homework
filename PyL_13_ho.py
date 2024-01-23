@@ -8,6 +8,7 @@
 
 import argparse
 import random
+import sys
 
 parser = argparse.ArgumentParser(
     description="""
@@ -71,7 +72,7 @@ def cipher_ceasar(in_file, offset):
         return ciphered_ceasar
     except OSError as e:
         print(f"Error opening input file: {e}")
-        return None
+        sys.exit(1) # Exits the script with a non-zero exit code indicating an error
 
 # 2nd changes
 
