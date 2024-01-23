@@ -163,7 +163,7 @@ def main():
     # Save to file
     save_to_new_file(result_cipher_animal, args.out_file, args.indent)
 
-    # Print results for debugging
+    # ==== Print results for debugging ====
 
     #print("\nCiphered Ceasar: \n")
     #print(result_cipher_ceasar)
