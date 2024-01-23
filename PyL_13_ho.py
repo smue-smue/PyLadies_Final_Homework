@@ -151,25 +151,38 @@ def save_to_new_file(result_cipher_animal, out_file, indent=False):
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
 
-# =======================  MAIN SCRIPT ======================= #
+def main():
+    """Main function for the cipher tool script.
 
-# read arguments that were passed from the CLI to the script,
-# parse and store them in variable "args".
-args = parser.parse_args() 
+    The script accepts input and output file paths, offset for the Caesar cipher,
+    characters to be replaced, replacement numbers, and a flag to insert random 
+    animal names through command-line arguments.
+    
+    The script starts by parsing command-line arguments using argparse 
+    and then applies the three cipher transformations iteratively to the 
+    transformed text of the input file. The final ciphered text is saved to an output file."""
 
-result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset) # result is a string
+    # Parse CLI arguments
+    args = parser.parse_args()
 
-result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
+    # Apply ciphers
+    result_cipher_ceasar = cipher_ceasar(args.in_file, args.offset) # result is a string
+    result_cipher_number = cipher_number(result_cipher_ceasar, args.replacing_character, args.replacement_number) # result is a string
+    result_cipher_animal = cipher_animal(result_cipher_number, args.animal)
 
-result_cipher_animal = cipher_animal(result_cipher_number, args.animal)
+    # Save to file
+    save_to_new_file(result_cipher_animal, args.out_file, args.indent)
 
-save_to_new_file(result_cipher_animal, args.out_file, args.indent)
+    # Print results for debugging
 
-print("\nCiphered Ceasar: \n")
-print(result_cipher_ceasar)
+    #print("\nCiphered Ceasar: \n")
+    #print(result_cipher_ceasar)
 
-print("\nCiphered Number: \n")
-print(result_cipher_number)
+    #print("\nCiphered Number: \n")
+    #print(result_cipher_number)
 
-print("\nCiphered Animal: \n")
-print(result_cipher_animal)
+    #print("\nCiphered Animal: \n")
+    #print(result_cipher_animal)
+
+if __name__ == "__main__":
+    main()
