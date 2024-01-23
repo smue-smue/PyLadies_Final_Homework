@@ -57,9 +57,9 @@ def cipher_ceasar(in_file, offset):
                 new_line = ""
                 for char in line:
                     if char.isupper():
-                        char = chr((ord(char) - ord("A") + int_offset) % 26 + ord("A"))
+                        char = chr((ord(char) - ord("A") + offset) % 26 + ord("A"))
                     elif char.islower():
-                        char = chr((ord(char) - ord("a") + int_offset) % 26 + ord("a"))
+                        char = chr((ord(char) - ord("a") + offset) % 26 + ord("a"))
                     new_line += char
 
                 ciphered_ceasar += new_line
