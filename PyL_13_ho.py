@@ -68,7 +68,6 @@ def cipher_ceasar(in_file, offset):
                     new_line += char
 
                 ciphered_ceasar += new_line
-        input_file.close()
         return ciphered_ceasar
     except OSError as e:
         print(f"Error opening input file: {e}")
@@ -137,19 +136,20 @@ def save_to_new_file(result_cipher_animal, out_file, indent=False):
             mod_text = ""
             if indent:
                 lines = result_cipher_animal.splitlines() # Split string text to List item - line per line
-                # print(lines) ## P ##
                 for line in lines:
                     line = "    " + line
-                    # print(line) ## P ##
                     mod_text += line + "\n"
-                # print(mod_text) ## P ##
-                output_file.write(mod_text)
+
             else:
-                output_file.write(result_cipher_animal)
-        output_file.close()
+                mod_text = result_cipher_animal
+
+            output_file.write(mod_text)
 
     except OSError as e:
         print(print(f"Error opening output file: {e}"))
+        return False # Indicate that an error occured
+    
+    return True
 
 def main():
     """Main function for the cipher tool script.
