@@ -134,10 +134,16 @@ def save_to_new_file(result_cipher_animal, out_file, indent=False):
 
     try:
         with open(out_file, mode="w", encoding="utf-8") as output_file:
+            mod_text = ""
             if indent:
-                for line in result_cipher_number:
+                lines = result_cipher_animal.splitlines() # Split string text to List item - line per line
+                # print(lines) ## P ##
+                for line in lines:
                     line = "    " + line
-                    output_file.write(line)
+                    # print(line) ## P ##
+                    mod_text += line + "\n"
+                # print(mod_text) ## P ##
+                output_file.write(mod_text)
             else:
                 output_file.write(result_cipher_animal)
         output_file.close()
